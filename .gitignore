@@ -1,4 +1,10 @@
+# Environment
 .env
 .venv
+
+# Cache
+__pycache__
+
+# Local OS
 .DS_Store
 
