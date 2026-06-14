@@ -1,5 +1,6 @@
 .venv
 .env
+# !.env.example if you want to include the example file
 __pycache__
 *.pyc
 .git
