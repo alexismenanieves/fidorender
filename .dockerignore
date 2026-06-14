@@ -1,0 +1,12 @@
+.venv
+.env
+__pycache__
+*.pyc
+.git
+.github
+tests
+.cursor
+.DS_Store
+README.md
+pyproject.toml
+uv.lock
