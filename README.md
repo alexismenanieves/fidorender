@@ -1,5 +1,9 @@
 # Fidorender
 
+<p align="center">
+  <img src="Fido.svg" alt="Fido, the Fidorender mascot" width="200">
+</p>
+
 FastAPI service that renders PDF pages to PNG or JPEG images. Upload a PDF and receive rendered pages as a ZIP archive or JSON with base64-encoded images.
 
 ## Requirements
