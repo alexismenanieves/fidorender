@@ -32,16 +32,25 @@ def _get_executor() -> ProcessPoolExecutor:
     return _executor
 
 
+def _shutdown_process_pool() -> None:
+    global _executor
+    if _executor is None:
+        return
+    logger.info("Shutting down process pool")
+    _executor.shutdown(wait=True, cancel_futures=True)
+    _executor = None
+    logger.info("Process pool stopped")
+
+
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
     """Create and tear down the process pool used for PDF rendering."""
     logger.info("Application startup workers={}", RENDER_WORKERS)
-    yield
-    global _executor
-    if _executor is not None:
-        logger.info("Shutting down process pool")
-        _executor.shutdown(wait=True)
-        _executor = None
+    try:
+        yield
+    finally:
+        _shutdown_process_pool()
+        logger.info("Application shutdown complete")
 
 
 app = FastAPI(

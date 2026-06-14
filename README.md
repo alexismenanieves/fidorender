@@ -11,7 +11,7 @@ FastAPI service that renders PDF pages to PNG or JPEG images. Upload a PDF and r
 
 ```bash
 uv sync --group dev
-uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 2727
 ```
 
 Run tests, lint, format, and type checks:
@@ -43,8 +43,10 @@ Set these environment variables (defaults shown):
 | `DEFAULT_FORMAT` | `png` | Default output format |
 | `DEFAULT_JPEG_QUALITY` | `85` | Default JPEG quality (1–100) |
 | `LOG_LEVEL` | `INFO` | Log level: `DEBUG`, `INFO`, `WARNING`, `ERROR` |
+| `PORT` | `2727` | HTTP server port |
+| `GRACEFUL_SHUTDOWN_SEC` | `30` | Grace period for in-flight requests on shutdown |
 
-Copy values into a local `.env` file if desired. Do not bake secrets or `.env` files into container images.
+Copy [`.env.example`](.env.example) to `.env` and adjust values for local development. Do not bake secrets or `.env` files into container images.
 
 ## API
 
@@ -71,7 +73,7 @@ Build and run locally:
 
 ```bash
 docker build -t fidorender .
-docker run --rm -p 8000:8000 fidorender
+docker run --rm -p 2727:2727 fidorender
 ```
 
 The container runs as a non-root `appuser`. Pass configuration via `-e` flags or your orchestrator.
@@ -82,7 +84,7 @@ Images are published to `ghcr.io/<owner>/fidorender` on pushes to `main` and ver
 
 ```bash
 docker pull ghcr.io/<owner>/fidorender:latest
-docker run --rm -p 8000:8000 ghcr.io/<owner>/fidorender:latest
+docker run --rm -p 2727:2727 ghcr.io/<owner>/fidorender:latest
 ```
 
 ## Security notes

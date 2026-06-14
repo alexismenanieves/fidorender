@@ -9,6 +9,8 @@ Environment variables:
     DEFAULT_FORMAT: Default output format (default: png).
     DEFAULT_JPEG_QUALITY: Default JPEG quality 1-100 (default: 85).
     LOG_LEVEL: Logging level DEBUG, INFO, WARNING, or ERROR (default: INFO).
+    PORT: HTTP server port (default: 2727).
+    GRACEFUL_SHUTDOWN_SEC: In-flight request grace period on shutdown (default: 30).
 """
 
 import os
@@ -34,3 +36,5 @@ DEFAULT_SCALE = float(env("DEFAULT_SCALE", "2.0"))
 DEFAULT_FORMAT = env("DEFAULT_FORMAT", "png")
 DEFAULT_JPEG_QUALITY = int(env("DEFAULT_JPEG_QUALITY", "85"))
 LOG_LEVEL = env("LOG_LEVEL", "INFO").upper()
+PORT = int(env("PORT", "2727"))
+GRACEFUL_SHUTDOWN_SEC = int(env("GRACEFUL_SHUTDOWN_SEC", "30"))
