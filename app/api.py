@@ -6,7 +6,7 @@ import time
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
 from functools import partial
-from typing import Any, Literal, TypeVar
+from typing import Any, Literal
 
 from fastapi import HTTPException, UploadFile
 from fastapi.responses import JSONResponse, Response
@@ -22,8 +22,7 @@ from app.render import (
 
 PDF_MAGIC = b"%PDF-"
 
-T = TypeVar("T")
-RunInPool = Callable[[Callable[[], T]], Awaitable[T]]
+type RunInPool[T] = Callable[[Callable[[], T]], Awaitable[T]]
 
 
 @dataclass(frozen=True)
