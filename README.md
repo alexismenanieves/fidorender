@@ -54,11 +54,19 @@ Copy [`.env.example`](.env.example) to `.env` and adjust values for local develo
 
 ## API
 
+Base URL when running locally: `http://localhost:2727`
+
 ### `GET /health`
 
 Returns `{"status": "ok"}`.
 
+```bash
+curl http://localhost:2727/health
+```
+
 ### `POST /v1/renderer`
+
+Upload a PDF and receive rendered pages as a ZIP file (default) or JSON with base64-encoded images.
 
 Multipart form fields:
 
@@ -70,6 +78,37 @@ Multipart form fields:
 | `pages` | no | all | Page selection, e.g. `1,3-5` |
 | `quality` | no | `85` | JPEG quality (1–100) |
 | `response` | no | `zip` | `zip` or `json` |
+
+**ZIP response (default)** — saves `pages.zip` with `page-001.png`, `page-002.png`, …
+
+```bash
+curl -X POST http://localhost:2727/v1/renderer \
+  -F "file=@document.pdf" \
+  -o pages.zip
+```
+
+**JSON response** — returns `page_count` and a `pages` array with base64 image data:
+
+```bash
+curl -X POST http://localhost:2727/v1/renderer \
+  -F "file=@document.pdf" \
+  -F "response=json" \
+  -F "format=png" \
+  -F "scale=1.0"
+```
+
+**Selected pages and JPEG output:**
+
+```bash
+curl -X POST http://localhost:2727/v1/renderer \
+  -F "file=@document.pdf" \
+  -F "pages=1,3-5" \
+  -F "format=jpeg" \
+  -F "quality=90" \
+  -o pages.zip
+```
+
+Replace `document.pdf` with the path to your PDF. When using Docker or Podman, the service must be reachable at port `2727` (see [Docker](#docker) below).
 
 ## Docker
 
